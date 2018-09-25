@@ -14,6 +14,31 @@ class App extends Component {
     ]
   };
 
+  constructor() {
+    // * First Life Cycle
+    super();
+    console.log("App - Constructor");
+  }
+
+  componentDidMount() {
+    //* Third Life Cycle
+    console.log("App - Mounted");
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    //* Start after render life cycle, used to get access to previous state and props
+    console.log("Component - did update", prevState, prevProps);
+
+    if (prevState.counters[0].value !== this.state.counters[0].value) {
+      // * For example you can make some ajax request for a new data
+    }
+  }
+
+  componentWillUnmount() {
+    // * Start when delete component
+    console.log("Component - will unmount");
+  }
+
   handleDelete = counterId => {
     const counters = this.state.counters.filter(c => c.id !== counterId);
     this.setState({ counters });
@@ -37,7 +62,22 @@ class App extends Component {
     this.setState({ counters });
   };
 
+  handleDecrement = counter => {
+    if (!counter.value) {
+      return;
+    }
+
+    const counters = [...this.state.counters];
+    const index = counters.indexOf(counter);
+    counters[index] = { ...counter }; // * React: Do not mutate state directly
+    counters[index].value--;
+
+    this.setState({ counters });
+  };
+
   render() {
+    console.log("App - Rendered"); //* Second Life Cycle
+
     return (
       <React.Fragment>
         <Navbar
@@ -47,6 +87,7 @@ class App extends Component {
           <Counters
             onReset={this.handleReset}
             onIncrement={this.handleIncrement}
+            onDecrement={this.handleDecrement}
             onDelete={this.handleDelete}
             counters={this.state.counters}
           />
