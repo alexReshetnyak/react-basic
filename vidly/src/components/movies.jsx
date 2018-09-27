@@ -3,16 +3,20 @@ import { getMovies } from "../services/fakeMovieService";
 import Like from "./common/like";
 import Paginator from "./common/pagination";
 
+const ITEMS_ON_PAGE = 5;
+
 class Movies extends Component {
   state = {
-    movies: getMovies()
+    movies: getMovies(),
+    moviesOnPage: []
   };
 
-  handleDeleteMovie = movieIndex => {
-    const { movies } = this.state;
-    movies.splice(movieIndex, 1);
+  handleDeleteMovie = movie => {
+    let { movies } = this.state;
+    movies = movies.filter(film => film._id !== movie._id);
     this.setState({ movies });
   };
+
   handleLike = movie => {
     const movies = [...this.state.movies];
     const index = movies.findIndex(mov => movie._id === mov._id);
@@ -21,8 +25,12 @@ class Movies extends Component {
     this.setState({ movies });
   };
 
+  handelPageChange = moviesOnPage => {
+    this.setState({ moviesOnPage });
+  };
+
   renderMoviesRows() {
-    return this.state.movies.map((movie, index) => (
+    return this.state.moviesOnPage.map((movie, index) => (
       <tr key={movie._id}>
         <td>{movie.title}</td>
         <td>{movie.genre.name}</td>
@@ -34,7 +42,7 @@ class Movies extends Component {
         <td>
           <button
             className="btn btn-danger btn-sm"
-            onClick={() => this.handleDeleteMovie(index)}
+            onClick={() => this.handleDeleteMovie(movie)}
           >
             Delete
           </button>
@@ -66,7 +74,11 @@ class Movies extends Component {
           </thead>
           <tbody>{this.renderMoviesRows()}</tbody>
         </table>
-        <Paginator />
+        <Paginator
+          itemsList={this.state.movies}
+          itemsOnPage={ITEMS_ON_PAGE}
+          onPageChange={items => this.handelPageChange(items)}
+        />
       </React.Fragment>
     );
   }
