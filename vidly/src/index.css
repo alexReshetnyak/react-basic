@@ -4,3 +4,7 @@ body {
   padding: 20px 0;
   font-family: sans-serif;
 }
+
+.clickable {
+  cursor: pointer;
+}

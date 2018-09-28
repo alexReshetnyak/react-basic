@@ -1,9 +1,9 @@
 import React from "react";
 
-const Like = props => {
+const Like = ({ like, onLike }) => {
   return (
-    <div onClick={props.onLike} style={{ cursor: "pointer" }}>
-      {props.like ? (
+    <div onClick={onLike} style={{ cursor: "pointer" }}>
+      {like ? (
         <i className="fa fa-heart" aria-hidden="true" />
       ) : (
         <i className="fa fa-heart-o" aria-hidden="true" />
