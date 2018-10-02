@@ -35,6 +35,9 @@ class NavBar extends Component {
             <NavLink to="/login" className="nav-item clickable nav-link">
               Login
             </NavLink>
+            <NavLink to="/register" className="nav-item clickable nav-link">
+              Register
+            </NavLink>
           </ul>
         </div>
       </nav>
