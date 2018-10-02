@@ -32,6 +32,9 @@ class NavBar extends Component {
             <NavLink to="/rentals" className="nav-item clickable nav-link">
               Rentals
             </NavLink>
+            <NavLink to="/login" className="nav-item clickable nav-link">
+              Login
+            </NavLink>
           </ul>
         </div>
       </nav>
