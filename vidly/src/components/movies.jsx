@@ -21,7 +21,10 @@ class Movies extends Component {
   };
 
   componentDidMount() {
-    this.setState({ movies: getMovies() });
+    const newState = { movies: getMovies() };
+    this.props.sortColumn && (newState.sortColumn = this.props.sortColumn);
+
+    this.setState(newState);
   }
 
   handleDeleteMovie = movie => {
