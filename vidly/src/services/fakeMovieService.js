@@ -73,22 +73,26 @@ export function getMovies() {
 }
 
 export function getMovie(id) {
-  return movies.find(m => m._id === id);
+  const movie = movies.find(m => m._id === id);
+  return movie ? { ...movie } : null;
 }
 
 export function saveMovie(movie) {
-  let movieInDb = movies.find(m => m._id === movie._id) || {};
-  movieInDb.name = movie.name;
-  movieInDb.genre = genresAPI.genres.find(g => g._id === movie.genreId);
-  movieInDb.numberInStock = movie.numberInStock;
-  movieInDb.dailyRentalRate = movie.dailyRentalRate;
+  let movieIndex = movies.findIndex(m => m._id === movie._id) || {};
 
-  if (!movieInDb._id) {
-    movieInDb._id = Date.now();
-    movies.push(movieInDb);
+  movie.genre = genresAPI.genres.find(g => g._id === movie.genreId);
+  delete movie.genreId;
+
+  if (!movie._id) {
+    movie._id = Date.now();
+    movies.push(movie);
   }
 
-  return movieInDb;
+  if (movieIndex > -1) {
+    movies[movieIndex] = movie;
+  }
+
+  return movie;
 }
 
 export function deleteMovie(id) {

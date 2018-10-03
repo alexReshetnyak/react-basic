@@ -13,6 +13,8 @@ class Form extends Component {
     const options = { abortEarly: false };
     const { error } = Joi.validate(this.state.data, this.schema, options); //* abortEarly: false - find all errors
 
+    // console.log("ValidateError:", error);
+
     if (!error) {
       return null;
     }
@@ -70,7 +72,7 @@ class Form extends Component {
     );
   }
 
-  renderInput(name, label, type = "text") {
+  renderInput(name, label, type = "text", placeholder = "") {
     const { data, errors } = this.state;
 
     return (
@@ -79,25 +81,24 @@ class Form extends Component {
         name={name}
         value={data[name]}
         label={label}
+        placeholder={placeholder}
         error={errors[name]}
         onChange={this.handleChange}
       />
     );
   }
 
-  renderSelect(name, label, dataValue, dataLabel, data = []) {
-    const { errors, data: stateData } = this.state;
+  renderSelect(name, label, options) {
+    const { errors, data } = this.state;
 
     return (
       <Select
         name={name}
         label={label}
-        error={errors[name]}
-        value={stateData[name]}
-        data={data}
-        dataValue={dataValue}
-        dataLabel={dataLabel}
+        value={data[name]}
+        options={options}
         onChange={this.handleChange}
+        error={errors[name]}
       />
     );
   }

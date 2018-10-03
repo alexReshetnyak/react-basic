@@ -7,6 +7,7 @@ import GenreList from "./common/genre-list";
 import MoviesTable from "./moviesTable";
 import { paginate } from "../utils/paginate";
 import { filterMovies } from "../utils/genre-utility";
+import SearchBox from "./common/searchBox";
 import _ from "lodash";
 
 // const ITEMS_ON_PAGE = 5;
@@ -18,7 +19,8 @@ class Movies extends Component {
     pageSize: 4,
     currentPage: 1,
     currentGenreId: "all",
-    sortColumn: { path: "title", order: "asc" }
+    sortColumn: { path: "title", order: "asc" },
+    searchQuery: ""
   };
 
   componentDidMount() {
@@ -51,11 +53,19 @@ class Movies extends Component {
   };
 
   handleGenreChange = genreId => {
-    this.setState({ currentGenreId: genreId, currentPage: 1 });
+    this.setState({ currentGenreId: genreId, currentPage: 1, searchQuery: "" });
   };
 
   handleSort = sortColumn => {
     this.setState({ sortColumn });
+  };
+
+  handleSearch = query => {
+    this.setState({
+      searchQuery: query,
+      currentGenreId: "",
+      currentPage: 1
+    });
   };
 
   renderMoviesRows(genreMovies) {
@@ -63,15 +73,17 @@ class Movies extends Component {
   }
 
   getPageData = () => {
-    const {
+    let {
       movies,
       currentGenreId,
       sortColumn,
       currentPage,
-      pageSize
+      pageSize,
+      searchQuery
     } = this.state;
 
-    const filteredMovies = filterMovies(currentGenreId, movies);
+    const filteredMovies = filterMovies(currentGenreId, movies, searchQuery);
+
     const sortedMovies = _.orderBy(
       filteredMovies,
       [sortColumn.path],
@@ -83,7 +95,13 @@ class Movies extends Component {
   };
 
   render() {
-    const { pageSize, currentPage, currentGenreId, sortColumn } = this.state;
+    const {
+      pageSize,
+      currentPage,
+      currentGenreId,
+      sortColumn,
+      searchQuery
+    } = this.state;
 
     const { totalCount, data } = this.getPageData();
 
@@ -100,10 +118,21 @@ class Movies extends Component {
           />
         </div>
         <div className="col">
-          <Link className="btn btn-primary" to="/movies/new">
+          <Link
+            className="btn btn-primary"
+            to="/movies/new"
+            style={{ marginBottom: 20 }}
+          >
             New Movie
           </Link>
           <h2>Showing {totalCount} movies in the database</h2>
+          {/* <Input
+            onChange={this.handleSearch}
+            name="search"
+            value={searchQuery}
+            placeholder="Search..."
+          /> */}
+          <SearchBox value={searchQuery} onChange={this.handleSearch} />
           <MoviesTable
             movies={data}
             sortColumn={sortColumn}
