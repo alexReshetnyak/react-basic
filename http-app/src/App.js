@@ -13,8 +13,6 @@ class App extends Component {
   };
 
   componentDidCatch(error, errorInfo) {
-    console.log("Errors", error, errorInfo);
-
     this.setState({ error });
     Sentry.configureScope(scope => {
       Object.keys(errorInfo).forEach(key => {
@@ -54,7 +52,7 @@ class App extends Component {
     this.setState({ posts });
 
     try {
-      await http.delete(`${config.apiEndpoint}/${post.id}`);
+      await http.delete(`asdas${config.apiEndpoint}/${post.id}`);
     } catch (error) {
       // * Handle expected Errors
       if (error.response && error.response.status === 404) {
@@ -79,7 +77,8 @@ class App extends Component {
           <ToastContainer />
           <button className="btn btn-primary" onClick={this.handleAdd}>
             Add
-          </button>
+          </button>{" "}
+          <br /> <br />
           <button className="btn btn-primary" onClick={this.handleError}>
             Create Error
           </button>
