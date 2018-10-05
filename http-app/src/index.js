@@ -2,13 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
-import * as Sentry from "@sentry/browser";
+import logger from "./services/logService";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.css";
 
-Sentry.init({
-  dsn: "https://740d2a36f4434e868ce741a40f6def4a@sentry.io/1294631"
-});
+logger.init();
 
 ReactDOM.render(<App />, document.getElementById("root"));
 registerServiceWorker();
