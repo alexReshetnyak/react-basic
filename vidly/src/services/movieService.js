@@ -6,7 +6,8 @@ function movieUrl(id) {
 }
 
 function getMovies() {
-  return http.get(`${config.apiEndpoint}movies`);
+  return http.get('http://localhost:3900/api/movies');
+  // return http.get(`${config.apiEndpoint}movies`);
 }
 
 function getMovie(id) {
@@ -14,7 +15,10 @@ function getMovie(id) {
 }
 
 function saveMovie(movie) {
-  const { _id, ...body } = movie;
+  const {
+    _id,
+    ...body
+  } = movie;
   if (_id) {
     return http.put(movieUrl(_id), body);
   }

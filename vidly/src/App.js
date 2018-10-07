@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
+import ProtectedRoute from "./components/common/protectedRoute";
 import Movies from "./components/movies";
 import Movie from "./components/movieForm";
 import NavBar from "./components/navBar";
@@ -25,10 +26,12 @@ class App extends Component {
   }
 
   render() {
+    const { user } = this.state;
+
     return (
       <React.Fragment>
         <ToastContainer />
-        <NavBar user={this.state.user} />
+        <NavBar user={user} />
         <br />
         <main className="container">
           <Switch>
@@ -36,13 +39,17 @@ class App extends Component {
             <Route path="/logout" component={Logout} />
             <Route path="/register" component={RegisterForm} />
             <Route path="/movies/new" component={Movie} />
-            <Route path="/movies/:id" component={Movie} />
+            <ProtectedRoute path="/movies/:id" component={Movie} />
             <Route
               path="/movies"
               render={props => (
                 <Movies
                   {...props}
-                  sortColumn={{ path: "dailyRentalRate", order: "desc" }}
+                  sortColumn={{
+                    path: "dailyRentalRate",
+                    order: "desc"
+                  }}
+                  user={user}
                 />
               )}
             />

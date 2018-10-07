@@ -113,6 +113,7 @@ class Movies extends Component {
       sortColumn,
       searchQuery
     } = this.state;
+    const { user } = this.props;
 
     const { totalCount, data } = this.getPageData();
 
@@ -129,13 +130,15 @@ class Movies extends Component {
           />
         </div>
         <div className="col">
-          <Link
-            className="btn btn-primary"
-            to="/movies/new"
-            style={{ marginBottom: 20 }}
-          >
-            New Movie
-          </Link>
+          {user && (
+            <Link
+              className="btn btn-primary"
+              to="/movies/new"
+              style={{ marginBottom: 20 }}
+            >
+              New Movie
+            </Link>
+          )}
           <h2>Showing {totalCount} movies in the database</h2>
           {/* <Input
             onChange={this.handleSearch}
