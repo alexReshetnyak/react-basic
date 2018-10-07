@@ -1,13 +1,13 @@
 import http from "./httpService";
-import config from "../config.json";
+// import config from "../config.json";
 
 function movieUrl(id) {
-  return `${config.apiEndpoint}movies/${id}`;
+  return `movies/${id}`;
 }
 
 function getMovies() {
-  return http.get('http://localhost:3900/api/movies');
-  // return http.get(`${config.apiEndpoint}movies`);
+  // return http.get('http://localhost:3900/api/movies');
+  return http.get(`movies`);
 }
 
 function getMovie(id) {
@@ -22,7 +22,7 @@ function saveMovie(movie) {
   if (_id) {
     return http.put(movieUrl(_id), body);
   }
-  return http.post(`${config.apiEndpoint}movies`, body);
+  return http.post(`movies`, body);
 }
 
 function deleteMovie(id) {

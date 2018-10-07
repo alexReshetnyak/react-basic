@@ -117,9 +117,9 @@ class Movies extends Component {
 
     const { totalCount, data } = this.getPageData();
 
-    if (!totalCount) {
-      return <h2>There are no movies in the database.</h2>;
-    }
+    // if (!totalCount) {
+    //   return <h2>There are no movies in the database.</h2>;
+    // }
 
     return (
       <div className="row">

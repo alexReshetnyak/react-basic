@@ -1,8 +1,8 @@
 import http from "./httpService";
-import config from "../config.json";
+// import config from "../config.json";
 
 function userUrl() {
-  return `${config.apiEndpoint}users`;
+  return `users`;
 }
 
 function register(user) {
